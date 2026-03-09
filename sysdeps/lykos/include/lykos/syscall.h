@@ -1,5 +1,5 @@
-#ifndef _ELYSIUM__SYSCALL_H
-#define _ELYSIUM__SYSCALL_H
+#ifndef _LYKOS__SYSCALL_H
+#define _LYKOS__SYSCALL_H
 
 #include <stdint.h>
 
@@ -17,6 +17,11 @@ enum
     SYSCALL_MMAP,
     // PROC
     SYSCALL_EXIT,
+    SYSCALL_FORK,
+    SYSCALL_GET_CWD,
+    SYSCALL_GET_PID,
+    SYSCALL_GET_PPID,
+    SYSCALL_GET_TID,
     SYSCALL_TCB_SET
 };
 

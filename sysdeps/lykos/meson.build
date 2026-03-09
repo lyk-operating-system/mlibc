@@ -4,6 +4,7 @@ rtld_sources += files(
     'generic/io.cpp',
     'generic/memory.cpp',
     'generic/other.cpp',
+    'generic/proc.cpp',
 )
 
 libc_sources += files(
@@ -11,6 +12,7 @@ libc_sources += files(
     'generic/io.cpp',
     'generic/memory.cpp',
     'generic/other.cpp',
+    'generic/proc.cpp',
 )
 
 if not no_headers

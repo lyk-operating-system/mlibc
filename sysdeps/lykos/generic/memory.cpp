@@ -37,7 +37,7 @@ namespace mlibc
             (uint64_t)offset
         );
 
-        *window = (void*)ret.value;
+        *window = (void *)ret.value;
         return ret.error;
     }
 
