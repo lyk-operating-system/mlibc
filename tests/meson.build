@@ -15,6 +15,11 @@ all_test_cases = [
 	'ansi/strchr',
 	'ansi/strrchr',
 	'ansi/wcsrtombs',
+	'ansi/mbsrtowcs',
+	'ansi/mbsnrtowcs',
+	'ansi/wcsnrtombs',
+	'ansi/mblen',
+	'ansi/mbrlen',
 	'ansi/wmemcmp',
 	'ansi/timegm',
 	'ansi/tz',
@@ -33,11 +38,24 @@ all_test_cases = [
 	'ansi/mbstowcs',
 	'ansi/locale',
 	'ansi/asctime',
+	'ansi/wcstof',
+	'ansi/fputwc',
+	'ansi/mbrtowc',
+	'ansi/ungetwc',
+	'ansi/fgetws',
+	'ansi/swscanf',
+	'ansi/fwscanf',
+	'ansi/swprintf',
+	'ansi/wcsftime',
+	'ansi/wctype',
+	'ansi/wctrans',
+	'ansi/nanosleep',
 	'bsd/ns_get_put',
 	'bsd/reallocarray',
 	'bsd/strl',
 	'bsd/sbrk',
 	'bsd/getloadavg',
+	'posix/sched_setscheduler',
 	'posix/inet_ntop',
 	'posix/inet_pton',
 	'posix/access',
@@ -119,6 +137,14 @@ all_test_cases = [
 	'posix/jrand48',
 	'posix/sigqueue',
 	'posix/memccpy',
+	'posix/strfmon',
+	'posix/sig2str',
+	'posix/getlogin_r',
+	'posix/inet_aton',
+	'posix/pthread_cond_signal',
+	'posix/protoent',
+	'posix/lfind',
+	'posix/lsearch',
 	'glibc/getopt',
 	'glibc/ffsl-ffsll',
 	'glibc/error_message_count',
@@ -131,6 +157,7 @@ all_test_cases = [
 	'glibc/rpmatch',
 	'glibc/strverscmp',
 	'glibc/memmem',
+	'glibc/stdio_ext',
 	'linux/xattr',
 	'linux/pthread_setname_np',
 	'linux/pthread_attr',
@@ -142,6 +169,8 @@ all_test_cases = [
 	'linux/ppoll',
 	'linux/utmp',
 	'linux/utmpx',
+	'linux-wrappers/rt_tgsigqueueinfo',
+	'linux-wrappers/rt_sigqueueinfo',
 ]
 
 if host_machine.system() == 'linux'
@@ -309,6 +338,8 @@ foreach test_name : all_test_cases
 	elif test_subdir == 'posix' and not posix_option
 		continue
 	elif test_subdir == 'linux' and not linux_option
+		continue
+	elif test_subdir == 'linux-wrappers' and not linux_wrappers_option
 		continue
 	endif
 
