@@ -36,6 +36,12 @@ enum
     SYSCALL_SOCKET
 };
 
+#define STUB()                              \
+({                                          \
+    __ensure(!"STUB function was called");  \
+    __builtin_unreachable();                \
+})
+
 #ifndef __MLIBC_ABI_ONLY
 
 typedef struct

@@ -12,46 +12,43 @@
 
 namespace mlibc
 {
-    [[noreturn]] void sys_exit(int status)
+    [[noreturn]] void Sysdeps<Exit>::operator()(int status)
     {
         syscall1(SYSCALL_EXIT, (uint64_t)status);
 
         std::unreachable();
     }
 
-    int sys_fork(pid_t *pid)
+    int Sysdeps<Fork>::operator()(pid_t *pid)
     {
-        mlibc::infoLogger() << "pre fork" << frg::endlog;
-		syscall_ret_t ret = syscall0(SYSCALL_FORK);
-		mlibc::infoLogger() << "post fork" << frg::endlog;
+        syscall_ret_t ret = syscall0(SYSCALL_FORK);
 
-		*pid = (pid_t)ret.value;
-
+        *pid = (pid_t)ret.value;
         return ret.error;
-	}
+    }
 
-    int sys_tcb_set(void *pointer)
+    int Sysdeps<TcbSet>::operator()(void *pointer)
     {
         return syscall1(SYSCALL_TCB_SET, (uint64_t)pointer).error;
     }
 
-    int sys_get_cwd(char *buffer, size_t size)
+    int Sysdeps<GetCwd>::operator()(char *buf, size_t size)
     {
-        return syscall2(SYSCALL_GET_CWD, (uint64_t)buffer, size).error;
+        return syscall2(SYSCALL_GET_CWD, (uint64_t)buf, size).error;
     }
 
-	pid_t sys_getpid()
-	{
-    	return syscall0(SYSCALL_GET_PID).value;
-	}
+    pid_t Sysdeps<GetPid>::operator()()
+    {
+        return syscall0(SYSCALL_GET_PID).value;
+    }
 
-	pid_t sys_getppid()
-	{
-	    return syscall0(SYSCALL_GET_PPID).value;
-	}
+    pid_t Sysdeps<GetPpid>::operator()()
+    {
+        return syscall0(SYSCALL_GET_PPID).value;
+    }
 
-	// pid_t is correct here
-    pid_t sys_gettid()
+    // pid_t is correct here
+    pid_t Sysdeps<GetTid>::operator()()
     {
         return syscall0(SYSCALL_GET_TID).value;
     }

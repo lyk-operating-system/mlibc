@@ -12,20 +12,28 @@
 
 namespace mlibc
 {
-    int sys_anon_allocate(size_t size, void **pointer)
+    int Sysdeps<AnonAllocate>::operator()(size_t size, void **pointer)
     {
-        return sys_vm_map(NULL, size, PROT_WRITE | PROT_READ | PROT_EXEC, MAP_ANON, -1, 0, pointer);
+        syscall_ret_t ret = syscall6(
+            SYSCALL_MMAP,
+            (uint64_t)NULL,
+            (uint64_t)size,
+            (uint64_t)PROT_WRITE | PROT_READ | PROT_EXEC,
+            (uint64_t)MAP_ANON,
+            (uint64_t)-1,
+            (uint64_t)0
+        );
+
+        *pointer = (void *)ret.value;
+        return ret.error;
     }
 
-    int sys_anon_free(void *pointer, size_t size)
+    int Sysdeps<AnonFree>::operator()(void *pointer, size_t size)
     {
-        // TODO: Implement
-        mlibc::infoLogger() << "UNIMPLEMENTED sys_anon_free" << frg::endlog;
-        return -1;
+        STUB();
     }
 
-    // mlibc assumes that anonymous memory returned by sys_vm_map() is zeroed by the kernel / whatever is behind the sysdeps
-    int sys_vm_map(void *hint [[maybe_unused]], size_t size [[maybe_unused]], int prot [[maybe_unused]], int flags [[maybe_unused]], int fd [[maybe_unused]], off_t offset [[maybe_unused]], void **window [[maybe_unused]])
+    int Sysdeps<VmMap>::operator()(void *hint, size_t size, int prot, int flags, int fd, off_t offset, void **window)
     {
         syscall_ret_t ret = syscall6(
             SYSCALL_MMAP,
@@ -41,17 +49,13 @@ namespace mlibc
         return ret.error;
     }
 
-    int sys_vm_unmap(void *pointer [[maybe_unused]], size_t size [[maybe_unused]])
+    int Sysdeps<VmUnmap>::operator()(void *pointer, size_t size)
     {
-        // TODO: Implement
-        mlibc::infoLogger() << "unimplemented sys_vm_unmap called" << frg::endlog;
-        return -1;
+        STUB();
     }
 
-    int sys_vm_protect(void *pointer [[maybe_unused]], size_t size [[maybe_unused]], int prot [[maybe_unused]])
+    int Sysdeps<VmProtect>::operator()(void *pointer, size_t size, int prot)
     {
-        // TODO: Implement
-        mlibc::infoLogger() << "unimplemented sys_vm_protect called" << frg::endlog;
-        return -1;
+        STUB();
     }
 }

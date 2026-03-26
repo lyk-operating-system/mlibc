@@ -1,4 +1,9 @@
-sysdep_supported_options = {'bsd': true, 'glibc': true, 'linux': true, 'posix': true}
+sysdep_supported_options = {
+    'bsd': true,
+    'glibc': true,
+    'linux': true,
+    'posix': true,
+}
 
 rtld_sources += files(
     'generic/io.cpp',
